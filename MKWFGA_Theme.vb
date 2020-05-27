@@ -17,10 +17,21 @@ Public Class MKWFGA_Theme
         Me.Controls.Add(Container_)
         Me.Controls.Add(Container_2)
         Me.Controls.Add(Container_3)
-
+        Me.Controls.Add(Container_4)
 
     End Sub
 
+
+
+    Private TextFon As Font = New Font("Arial", 12, FontStyle.Bold, GraphicsUnit.Point)
+    Property TextFont As Font
+        Get
+            Return TextFon
+        End Get
+        Set(value As Font)
+            TextFon = value
+        End Set
+    End Property
 
     Private bn As FormBorderStyle = FormBorderStyle.None
 
@@ -33,50 +44,91 @@ Public Class MKWFGA_Theme
             bn = value
         End Set
     End Property
+
+    Private PVColor As Color = Color.White
+    <Browsable(False), EditorBrowsable(EditorBrowsableState.Always)>
+    Public Overloads Property BackColor() As Color
+        Get
+            Return PVColor
+        End Get
+        Set(ByVal value As Color)
+            PVColor = value
+        End Set
+    End Property
+
+
+    Private ForeC As Color = Color.Black
+    <Browsable(False), EditorBrowsable(EditorBrowsableState.Always)>
+    Public Overloads Property ForeColor() As Color
+        Get
+            Return ForeC
+        End Get
+        Set(ByVal value As Color)
+            ForeC = value
+        End Set
+    End Property
+
+
+
     Protected Overrides Sub CreateHandle()
         MyBase.CreateHandle()
         FindForm.FormBorderStyle = FormBorderStyle.None
         ' Dock = DockStyle.Fill
-
-        Container_.FlatStyle = FlatStyle.Flat
-        Container_.Size = New Size(32, 32)
-
-
-        Container_.FlatAppearance.BorderColor = Color.FromArgb(0, 122, 204)
+        ' Container_.FlatAppearance.BorderColor = BDColor
 
         ' Container_.FlatAppearance =
+        Container_.FlatStyle = FlatStyle.Flat
+        Container_.Size = New Size(32, 32)
         Container_.Text = "X"
-        Container_.BackColor = Color.FromArgb(30, 30, 30)
+        Container_.Font = New Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold)
+        ' Container_.BackColor = Color.FromArgb(30, 30, 30)
 
         Container_2.FlatStyle = FlatStyle.Flat
         Container_2.Size = New Size(32, 32)
-
-
-        Container_2.FlatAppearance.BorderColor = Color.FromArgb(0, 122, 204)
-
-        ' Container_.FlatAppearance =
+        Container_2.Font = New Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold)
         Container_2.Text = "+"
-        Container_2.BackColor = Color.FromArgb(30, 30, 30)
-
-
 
 
 
         Container_3.FlatStyle = FlatStyle.Flat
         Container_3.Size = New Size(32, 32)
-
-
-        Container_3.FlatAppearance.BorderColor = Color.FromArgb(0, 122, 204)
-
-        ' Container_.FlatAppearance =
+        Container_3.Font = New Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold)
         Container_3.Text = "-"
-        Container_3.BackColor = Color.FromArgb(30, 30, 30)
+        '  Container_3.BackColor = Color.FromArgb(30, 30, 30)
+
+
+        Container_4.BackColor = Color.Transparent
+        Container_4.Size = New Size(32, 32)
+        Container_4.SizeMode = PictureBoxSizeMode.Normal
+
+        '
+
+
 
     End Sub
+
+    Private g As Icon = SystemIcons.Application
+    Public Overloads Property Icon() As Icon
+        Get
+            Return g
+            Container_4.Image = Bitmap.FromHicon(g.Handle)
+            Me.Refresh()
+
+        End Get
+        Set(ByVal value As Icon)
+            g = value
+            Container_4.Image = Bitmap.FromHicon(g.Handle)
+            Me.Refresh()
+
+        End Set
+    End Property
 
     Private WithEvents Container_ As New Button
     Private WithEvents Container_2 As New Button
     Private WithEvents Container_3 As New Button
+    Private WithEvents Container_4 As New PictureBox
+
+
 
     Protected Sub ClickBtnClose(sender As Object, e As EventArgs) Handles Container_.Click
         Application.Exit()
@@ -87,62 +139,149 @@ Public Class MKWFGA_Theme
     Protected Sub ClickBtnMinimized(sender As Object, e As EventArgs) Handles Container_3.Click
         Me.WindowState = FormWindowState.Normal
     End Sub
+    Public Enum Themed
+        Light = 1
+        Dark = 2
+    End Enum
+
+
+
+    Private themetest As Themed = Themed.Dark
+
+
+    Public Property Theme As Themed
+        Get
+            Return themetest
+
+            Me.Refresh()
+
+        End Get
+        Set(ByVal value As Themed)
+            themetest = value
+
+            Me.Refresh()
+
+        End Set
+    End Property
+
+
+
+    Private BDColor As Color = Color.FromArgb(0, 122, 204)
+
+    Public Property BorderColor() As Color
+        Get
+            Return BDColor
+            Me.Refresh()
+        End Get
+        Set(ByVal value As Color)
+            BDColor = value
+            Me.Refresh()
+        End Set
+    End Property
+
+
+    Private TextC As Color = Color.FromArgb(0, 122, 204)
+
+    Public Property TextColor() As Color
+        Get
+            Return TextC
+            Me.Refresh()
+        End Get
+        Set(ByVal value As Color)
+            TextC = value
+            Me.Refresh()
+        End Set
+    End Property
+
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
 
 
+
         Container_.Location = New Point(Me.Width - 34, 2)
+        Container_2.Location = New Point(Me.Width - 68, 2)
+        Container_3.Location = New Point(Me.Width - 102, 2)
+        Container_4.Location = New Point(15, 2)
+
 
         Container_.FlatAppearance.BorderSize = 1
-        Container_.ForeColor = Color.White
-
-
-
-
-
-        Container_2.Location = New Point(Me.Width - 68, 2)
-
         Container_2.FlatAppearance.BorderSize = 1
-        Container_2.ForeColor = Color.White
-
-
-
-
-        Container_3.Location = New Point(Me.Width - 102, 2)
-
         Container_3.FlatAppearance.BorderSize = 1
-        Container_3.ForeColor = Color.White
-        '  Container_.Location = New Point(20, 20)
 
-        '  Container_.Name = "ContainerSir"
-        '  Container_.BackColor = Color.White
-        ' Container_.TabIndex = 4500
 
-        'Container_.Size = New Size(Me.Width - 14, Me.Height - 36)
-        ' Container_.Location = (New Point(7, 29))
+
+
+
+
+
+        Container_.FlatAppearance.BorderColor = BDColor
+        Container_2.FlatAppearance.BorderColor = BDColor
+        Container_3.FlatAppearance.BorderColor = BDColor
+
+
+
 
 
         Dim MyBitmap As New Bitmap(Width, Height)
 
         Dim g As Graphics = Graphics.FromImage(MyBitmap)
 
-        g.Clear(Color.FromArgb(30, 30, 30))
+
+        If themetest = Themed.Dark Then
+
+            g.Clear(Color.FromArgb(30, 30, 30))
+
+
+            Container_.BackColor = Color.FromArgb(30, 30, 30)
+            Container_2.BackColor = Color.FromArgb(30, 30, 30)
+            Container_3.BackColor = Color.FromArgb(30, 30, 30)
+
+
+
+            Container_.ForeColor = Color.FromArgb(254, 254, 254)
+            Container_2.ForeColor = Color.FromArgb(254, 254, 254)
+            Container_3.ForeColor = Color.FromArgb(254, 254, 254)
+
+
+        Else
+
+
+            g.Clear(Color.FromArgb(254, 254, 254))
+
+            Container_2.BackColor = Color.FromArgb(254, 254, 254)
+            Container_.BackColor = Color.FromArgb(254, 254, 254)
+            Container_3.BackColor = Color.FromArgb(254, 254, 254)
+
+
+
+            Container_.ForeColor = Color.FromArgb(30, 30, 30)
+            Container_2.ForeColor = Color.FromArgb(30, 30, 30)
+            Container_3.ForeColor = Color.FromArgb(30, 30, 30)
+
+
+        End If
 
 
 
 
-        g.DrawRectangle(New Pen(Color.FromArgb(0, 122, 204), 1), New Rectangle(0, 0, Width - 1, Height - 1))
+
+        g.DrawRectangle(New Pen(BDColor, 1), New Rectangle(0, 0, Width - 1, Height - 1))
 
 
-        g.DrawLine(New Pen(Color.FromArgb(0, 122, 204), 1), 0, 36, Width, 36)
+        g.DrawLine(New Pen(BDColor, 1), 0, 36, Width, 36)
 
 
-        g.FillRectangle(New SolidBrush(Color.FromArgb(0, 122, 204)), New Rectangle(3, 3, 3, 31))
+        g.FillRectangle(New SolidBrush(BDColor), New Rectangle(3, 3, 3, 31))
 
-        g.FillRectangle(New SolidBrush(Color.FromArgb(0, 122, 204)), New Rectangle(8, 3, 3, 31))
+        g.FillRectangle(New SolidBrush(BDColor), New Rectangle(8, 3, 3, 31))
 
+        'New Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular)
 
-        g.DrawString(Me.Text, New Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular), New SolidBrush(Color.FromArgb(0, 122, 204)), Me.Width / 2 - TextRenderer.MeasureText(Me.Text, New Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular)).Width / 2, 36 / 2 - TextRenderer.MeasureText(Me.Text, New Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular)).Height / 2)
+        ''TODO : ColorString
+
+        g.DrawString(Me.Text, TextFon, New SolidBrush(TextC), Me.Width / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Width / 2, 36 / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Height / 2)
+        ''
+
 
 
 
@@ -150,7 +289,7 @@ Public Class MKWFGA_Theme
 
 
         If BTLine Then
-            g.DrawLine(New Pen(Color.FromArgb(0, 122, 204), 1), Width - x2, Me.Height - 15, x2, Me.Height - 15)
+            g.DrawLine(New Pen(BDColor, 1), Width - x2, Me.Height - 15, x2, Me.Height - 15)
         End If
 
 
@@ -161,7 +300,6 @@ Public Class MKWFGA_Theme
 
         Dim azg As Graphics = Graphics.FromHdc(DesktopIntPtr)
 
-        ' azg.FillRectangle(New SolidBrush(Color.FromArgb(0, 122, 204)), New Rectangle(8, 3, 3, 31))
 
         azg.Dispose()
         ReleaseDC(DesktopIntPtr)
@@ -169,7 +307,7 @@ Public Class MKWFGA_Theme
 
 
 
-        '  Task.Run(Sub() Ref())
+
         If ShowCloseBTN Then
             Container_.Show()
 
@@ -195,7 +333,7 @@ Public Class MKWFGA_Theme
 
 
         '   SHChangeNotify(&H8000000, &H0, Nothing, Nothing)
-        ' Me.Controls.Add(Container_)
+
         MyBase.OnPaint(e)
 
 
@@ -217,9 +355,6 @@ Public Class MKWFGA_Theme
         Me.Refresh()
         MyBase.OnTextChanged(e)
     End Sub
-
-
-
 
     Private CloseBTN As Boolean = True
     Public Property ShowCloseBTN As Boolean
@@ -255,9 +390,6 @@ Public Class MKWFGA_Theme
         End Set
     End Property
 
-
-
-
     Private BTLine As Boolean = True
     Public Property BottomLine As Boolean
         Get
@@ -290,7 +422,17 @@ Public Class MKWFGA_Theme
 
 
 
-
+    Private DragF As Boolean = True
+    Public Property Draggable As Boolean
+        Get
+            Return DragF
+            Me.Refresh()
+        End Get
+        Set(ByVal value As Boolean)
+            DragF = value
+            Me.Refresh()
+        End Set
+    End Property
 
 
 
@@ -305,7 +447,7 @@ Public Class MKWFGA_Theme
         Dim p As Point = Me.PointToClient(Me.MousePosition)
 
         'SHChangeNotify(&H8000000, &H0, Nothing, Nothing)
-        If p.Y < 36 Then
+        If p.Y < 36 And Draggable = True Then
 
 
             ReleaseCapture()
@@ -318,6 +460,9 @@ Public Class MKWFGA_Theme
 
         MyBase.OnMouseDown(e)
     End Sub
+
+
+
 
 
 
