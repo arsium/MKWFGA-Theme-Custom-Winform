@@ -1,6 +1,18 @@
 # MKWFGA-Theme-Custom-Winform
 This is a WIP with winform using VBNET
 
+Updated : 27-05-20 :
+
+* -TextFont Property 
+* -Draggable Property 
+* -Icon Property 
+* -Theme : Dark / Light
+* -Corrected UI Bugs
+* -BorderColor(bottom lines included)
+* -Hide Bottom Line 
+* -TextColor
+
+
 Features  :
 
 * -Resize features (left , bottom ,right)
@@ -13,6 +25,12 @@ Features  :
 
 
 ![Image description](https://i.postimg.cc/1RGF4976/Capture-d-cran-230.png)
+
+![Image description](https://i.postimg.cc/NfhJwJ3j/Capture-d-cran-241.png)
+
+![Image description](https://i.postimg.cc/ZRBcGpjN/Capture-d-cran-237.png)
+
+
 
 MIT License
 
