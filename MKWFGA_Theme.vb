@@ -107,18 +107,23 @@ Public Class MKWFGA_Theme
 
     End Sub
 
+
     Private g As Icon = SystemIcons.Application
     Public Overloads Property Icon() As Icon
         Get
             Return g
+
             Container_4.Image = Bitmap.FromHicon(g.Handle)
-            Me.Refresh()
+                Me.Refresh()
+
 
         End Get
         Set(ByVal value As Icon)
             g = value
+
             Container_4.Image = Bitmap.FromHicon(g.Handle)
-            Me.Refresh()
+                Me.Refresh()
+
 
         End Set
     End Property
@@ -128,6 +133,18 @@ Public Class MKWFGA_Theme
     Private WithEvents Container_3 As New Button
     Private WithEvents Container_4 As New PictureBox
 
+
+    Private HideIc As Boolean = False
+    Public Property HideIcon As Boolean
+        Get
+            Return HideIc
+            Me.Refresh()
+        End Get
+        Set(ByVal value As Boolean)
+            HideIc = value
+            Me.Refresh()
+        End Set
+    End Property
 
 
     Protected Sub ClickBtnClose(sender As Object, e As EventArgs) Handles Container_.Click
@@ -142,7 +159,65 @@ Public Class MKWFGA_Theme
     Public Enum Themed
         Light = 1
         Dark = 2
+        Custom = 3
     End Enum
+
+    Public Enum ThemeControlsb
+        Light = 1
+        Dark = 2
+    End Enum
+
+
+    Public Enum LocText
+        Left = 1
+        Right = 2
+        Middle = 3
+        Custom = 4
+    End Enum
+
+    Private LocTextP As LocText = LocText.Middle
+
+    Public Property TextPosition As LocText
+        Get
+            Return LocTextP
+
+            Me.Refresh()
+
+        End Get
+        Set(ByVal value As LocText)
+            LocTextP = value
+
+            Me.Refresh()
+
+        End Set
+    End Property
+
+
+
+
+
+
+
+
+
+    Private ThemeBtN As ThemeControlsb = ThemeControlsb.Light
+
+    Public Property ThemeControlBox As ThemeControlsb
+        Get
+            Return ThemeBtN
+
+            Me.Refresh()
+
+        End Get
+        Set(ByVal value As ThemeControlsb)
+            ThemeBtN = value
+
+            Me.Refresh()
+
+        End Set
+    End Property
+
+
 
 
 
@@ -166,6 +241,9 @@ Public Class MKWFGA_Theme
 
 
 
+
+
+
     Private BDColor As Color = Color.FromArgb(0, 122, 204)
 
     Public Property BorderColor() As Color
@@ -178,6 +256,7 @@ Public Class MKWFGA_Theme
             Me.Refresh()
         End Set
     End Property
+
 
 
     Private TextC As Color = Color.FromArgb(0, 122, 204)
@@ -193,6 +272,54 @@ Public Class MKWFGA_Theme
         End Set
     End Property
 
+    Private BKColor As Color = Color.FromArgb(30, 30, 30)
+    ''' <summary>
+    ''' Choose "Custom Theme" To make this working !
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    <System.ComponentModel.Description("Choose Custom Theme To make this working")>
+    Public Property FormBackColor() As Color
+        Get
+            Return BKColor
+            Me.Refresh()
+        End Get
+        Set(ByVal value As Color)
+            BKColor = value
+            Me.Refresh()
+        End Set
+    End Property
+
+
+
+
+
+    Public TextPositionCustomValue As Integer
+    Public Property TextPositionCustom As Integer
+        Get
+            Return TextPositionCustomValue
+            Me.Refresh()
+        End Get
+        Set(ByVal value As Integer)
+            TextPositionCustomValue = value
+            Me.Refresh()
+        End Set
+    End Property
+
+
+
+
+    Private SizeableP As Boolean = True
+    Public Property Sizeable As Boolean
+        Get
+            Return SizeableP
+            Me.Refresh()
+        End Get
+        Set(ByVal value As Boolean)
+            SizeableP = value
+            Me.Refresh()
+        End Set
+    End Property
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
 
@@ -227,6 +354,12 @@ Public Class MKWFGA_Theme
         Dim g As Graphics = Graphics.FromImage(MyBitmap)
 
 
+        If HideIc = True Then
+            Container_4.Visible = False
+        Else
+            Container_4.Visible = True
+        End If
+
         If themetest = Themed.Dark Then
 
             g.Clear(Color.FromArgb(30, 30, 30))
@@ -243,7 +376,7 @@ Public Class MKWFGA_Theme
             Container_3.ForeColor = Color.FromArgb(254, 254, 254)
 
 
-        Else
+        ElseIf themetest = Themed.Light Then
 
 
             g.Clear(Color.FromArgb(254, 254, 254))
@@ -258,10 +391,33 @@ Public Class MKWFGA_Theme
             Container_2.ForeColor = Color.FromArgb(30, 30, 30)
             Container_3.ForeColor = Color.FromArgb(30, 30, 30)
 
+        ElseIf themetest = Themed.Custom Then
+
+
+            g.Clear(BKColor)
+
+            Container_2.BackColor = BKColor
+            Container_.BackColor = BKColor
+            Container_3.BackColor = BKColor
+
 
         End If
 
+        If ThemeBtN = ThemeControlsb.Dark Then
 
+
+            Container_.ForeColor = Color.FromArgb(254, 254, 254)
+            Container_2.ForeColor = Color.FromArgb(254, 254, 254)
+            Container_3.ForeColor = Color.FromArgb(254, 254, 254)
+
+        ElseIf ThemeBtN = ThemeControlsb.Light Then
+
+
+            Container_.ForeColor = Color.FromArgb(30, 30, 30)
+            Container_2.ForeColor = Color.FromArgb(30, 30, 30)
+            Container_3.ForeColor = Color.FromArgb(30, 30, 30)
+
+        End If
 
 
 
@@ -279,8 +435,30 @@ Public Class MKWFGA_Theme
 
         ''TODO : ColorString
 
-        g.DrawString(Me.Text, TextFon, New SolidBrush(TextC), Me.Width / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Width / 2, 36 / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Height / 2)
-        ''
+
+
+        If LocTextP = LocText.Middle Then
+
+            g.DrawString(Me.Text, TextFon, New SolidBrush(TextC), Me.Width / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Width / 2, 36 / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Height / 2)
+            ''
+        ElseIf LocTextP = LocText.Left And HideIc = False Then
+            g.DrawString(Me.Text, TextFon, New SolidBrush(TextC), 52, 36 / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Height / 2)
+            '- TextRenderer.MeasureText(Me.Text, TextFon).Width / 2
+
+        ElseIf LocTextP = LocText.Left And HideIc = True Then
+            g.DrawString(Me.Text, TextFon, New SolidBrush(TextC), 22, 36 / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Height / 2)
+
+
+        ElseIf LocTextP = LocText.Right Then
+
+            g.DrawString(Me.Text, TextFon, New SolidBrush(TextC), Me.Width - 112 - TextRenderer.MeasureText(Me.Text, TextFon).Width, 36 / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Height / 2)
+
+
+        ElseIf LocTextP = LocText.Custom Then
+            g.DrawString(Me.Text, TextFon, New SolidBrush(TextC), TextPositionCustomValue, 36 / 2 - TextRenderer.MeasureText(Me.Text, TextFon).Height / 2)
+
+            'TextPositionCustomValue
+        End If
 
 
 
@@ -404,24 +582,6 @@ Public Class MKWFGA_Theme
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     Private DragF As Boolean = True
     Public Property Draggable As Boolean
         Get
@@ -462,10 +622,6 @@ Public Class MKWFGA_Theme
     End Sub
 
 
-
-
-
-
     Const WM_NCHITTEST As Integer = &H84
 
 
@@ -474,7 +630,6 @@ Public Class MKWFGA_Theme
     Const HTBOTTOM As Integer = 15
 
     Const HTRIGHT As Integer = 11
-
 
 
     Const HTBOTTOMLEFT As Integer = 16
@@ -491,50 +646,54 @@ Public Class MKWFGA_Theme
 
         Select Case m.Msg
 
+
+
             Case WM_NCHITTEST
-
-                Dim loc As New Point(m.LParam.ToInt32 And &HFFFF, m.LParam.ToInt32 >> 16)
-                loc = PointToClient(loc)
-
-
-                Dim blnRight As Boolean = (loc.X > Width - 9)
+                If SizeableP = True Then
+                    Dim loc As New Point(m.LParam.ToInt32 And &HFFFF, m.LParam.ToInt32 >> 16)
+                    loc = PointToClient(loc)
 
 
-                Dim blnBottom As Boolean = (loc.Y > Height - 9)
-
-                Dim blnHTLEFT As Boolean = (loc.X < Width - (Width - 9))
+                    Dim blnRight As Boolean = (loc.X > Width - 9)
 
 
-                If blnRight And blnBottom Then
+                    Dim blnBottom As Boolean = (loc.Y > Height - 9)
 
-                    m.Result = CType(HTBOTTOMRIGHT, IntPtr)
-                    Return
-
-
-                ElseIf blnHTLEFT And blnBottom Then
-
-                    m.Result = CType(HTBOTTOMLEFT, IntPtr)
-                    Return
-
-                ElseIf blnRight Then
-
-                    m.Result = CType(HTRIGHT, IntPtr)
-                    Return
-
-                ElseIf blnBottom Then
-
-                    m.Result = CType(HTBOTTOM, IntPtr)
-                    Return
+                    Dim blnHTLEFT As Boolean = (loc.X < Width - (Width - 9))
 
 
-                ElseIf blnHTLEFT Then
+                    If blnRight And blnBottom Then
 
-                    m.Result = CType(HTLEFT, IntPtr)
-                    Return
+                        m.Result = CType(HTBOTTOMRIGHT, IntPtr)
+                        Return
 
+
+                    ElseIf blnHTLEFT And blnBottom Then
+
+                        m.Result = CType(HTBOTTOMLEFT, IntPtr)
+                        Return
+
+                    ElseIf blnRight Then
+
+                        m.Result = CType(HTRIGHT, IntPtr)
+                        Return
+
+                    ElseIf blnBottom Then
+
+                        m.Result = CType(HTBOTTOM, IntPtr)
+                        Return
+
+
+                    ElseIf blnHTLEFT Then
+
+                        m.Result = CType(HTLEFT, IntPtr)
+                        Return
+
+
+                    End If
+                Else
 
                 End If
-
         End Select
 
         MyBase.WndProc(m)
