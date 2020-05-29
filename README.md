@@ -1,6 +1,16 @@
 # MKWFGA-Theme-Custom-Winform
 This is a WIP with winform using VBNET
 
+Updated 29-05-20 :
+
+* -Sizeable Property (enable or disable)
+* -Custom BackColor
+* -Custom Theme
+* -ThemeControlBox (dark or light choose depending on your UI)
+* -Hide Icon
+* -TextAlign : Middle , Left (adaptive with hide Icon) , right  , custom
+
+
 Updated : 27-05-20 :
 
 * -TextFont Property 
