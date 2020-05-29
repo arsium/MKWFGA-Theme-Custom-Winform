@@ -1,9 +1,10 @@
-﻿Imports System.ComponentModel
+Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Runtime.InteropServices
 Imports System.Threading
+Imports System.Windows.Forms
 
 Public Class MKWFGA_Theme
     Inherits Form
@@ -108,13 +109,13 @@ Public Class MKWFGA_Theme
     End Sub
 
 
-    Private g As Icon = SystemIcons.Application
+    Private g As Icon = SystemIcons.WinLogo
     Public Overloads Property Icon() As Icon
         Get
             Return g
 
             Container_4.Image = Bitmap.FromHicon(g.Handle)
-                Me.Refresh()
+            Me.Refresh()
 
 
         End Get
@@ -122,7 +123,7 @@ Public Class MKWFGA_Theme
             g = value
 
             Container_4.Image = Bitmap.FromHicon(g.Handle)
-                Me.Refresh()
+            Me.Refresh()
 
 
         End Set
@@ -148,7 +149,7 @@ Public Class MKWFGA_Theme
 
 
     Protected Sub ClickBtnClose(sender As Object, e As EventArgs) Handles Container_.Click
-        Application.Exit()
+        Me.Close()
     End Sub
     Protected Sub ClickBtnMaximized(sender As Object, e As EventArgs) Handles Container_2.Click
         Me.WindowState = FormWindowState.Maximized
@@ -200,7 +201,7 @@ Public Class MKWFGA_Theme
 
 
 
-    Private ThemeBtN As ThemeControlsb = ThemeControlsb.Light
+    Private ThemeBtN As ThemeControlsb = ThemeControlsb.Dark
 
     Public Property ThemeControlBox As ThemeControlsb
         Get
